@@ -70,6 +70,9 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
+set_param synth.incrementalSynthesisCache C:/Users/Gokaraan/AppData/Roaming/Xilinx/Vivado/.Xil/Vivado-20324-DESKTOP-IJF0GJG/incrSyn
+set_msg_config -id {Synth 8-256} -limit 10000
+set_msg_config -id {Synth 8-638} -limit 10000
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a35ticpg236-1L
 
@@ -84,7 +87,11 @@ set_property ip_output_repo {d:/Mtech/Vivado/Booths Multiplier/Booths Multiplier
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
-read_verilog -library xil_defaultlib {{D:/Mtech/Vivado/Booths Multiplier/Booths Multiplier.srcs/sources_1/new/Booths_Multiplier.v}}
+read_verilog -library xil_defaultlib {
+  D:/Mtech/Vivado/Adders/Adders.srcs/sources_1/new/CLA_1bit.v
+  D:/Mtech/Vivado/Adders/Adders.srcs/sources_1/new/Controlled_adder_sub.v
+  {D:/Mtech/Vivado/Booths Multiplier/Booths Multiplier.srcs/sources_1/new/Booths_Multiplier.v}
+}
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
 # stitched into the results of this synthesis run. Any black boxes in the

@@ -2,13 +2,13 @@
 # Webtalk v2020.2 (64-bit)
 # SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
 # IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
-# Start of session at: Fri Mar 14 00:06:23 2025
-# Process ID: 10036
+# Start of session at: Tue Mar 18 11:56:07 2025
+# Process ID: 13908
 # Current directory: D:/Mtech/Vivado/Booths Multiplier/Booths Multiplier.sim/sim_1/synth/func/xsim
 # Command line: wbtcv.exe -mode batch -source D:/Mtech/Vivado/Booths Multiplier/Booths Multiplier.sim/sim_1/synth/func/xsim/xsim.dir/Booths_MultiplierTB_func_synth/webtalk/xsim_webtalk.tcl -notrace
 # Log file: D:/Mtech/Vivado/Booths Multiplier/Booths Multiplier.sim/sim_1/synth/func/xsim/webtalk.log
 # Journal file: D:/Mtech/Vivado/Booths Multiplier/Booths Multiplier.sim/sim_1/synth/func/xsim\webtalk.jou
 #-----------------------------------------------------------
 source D:/Mtech/Vivado/Booths -notrace
-couldn't read file "D:/Mtech/Vivado/Booths": permission denied
-INFO: [Common 17-206] Exiting Webtalk at Fri Mar 14 00:06:23 2025...
+couldn't read file "D:/Mtech/Vivado/Booths": no such file or directory
+INFO: [Common 17-206] Exiting Webtalk at Tue Mar 18 11:56:07 2025...

@@ -2,14 +2,16 @@
 
 module Booths_MultiplierTB();
     reg [7:0] multi;
+    reg [7:0]multiplier;
     reg clk,rst;
     wire [15:0] q;
     
     Booths_Multiplier uut(
         .multi(multi),
+        .multiplier(multiplier),
         .clk(clk),
         .rst(rst),
-        .q(q)
+        .product(q)
     );
     
   
@@ -20,8 +22,14 @@ module Booths_MultiplierTB();
        begin
         clk=0;
         rst=1;
-        multi=8'b10101010; 
-        #10 rst=0;
-        #100 $finish;
-    end
+        multi=8'b00000000; 
+        multiplier=8'b00000000;
+        end
+        
+     initial
+        begin
+            rst=0;
+            #100  multi=8'b00001011; multiplier=8'b00001110;
+            #500 $finish;
+        end
 endmodule
