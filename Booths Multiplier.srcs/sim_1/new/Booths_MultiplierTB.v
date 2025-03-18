@@ -5,13 +5,15 @@ module Booths_MultiplierTB();
     reg [7:0]multiplier;
     reg clk,rst;
     wire [15:0] q;
+    wire [2:0]count;
     
     Booths_Multiplier uut(
         .multi(multi),
         .multiplier(multiplier),
         .clk(clk),
         .rst(rst),
-        .product(q)
+        .product(q),
+        .count(count)
     );
     
   

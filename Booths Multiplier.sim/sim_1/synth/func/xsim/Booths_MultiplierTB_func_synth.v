@@ -1,7 +1,7 @@
 // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-// Date        : Tue Mar 18 11:59:48 2025
+// Date        : Tue Mar 18 23:55:09 2025
 // Host        : DESKTOP-IJF0GJG running 64-bit major release  (build 9200)
 // Command     : write_verilog -mode funcsim -nolib -force -file {D:/Mtech/Vivado/Booths Multiplier/Booths
 //               Multiplier.sim/sim_1/synth/func/xsim/Booths_MultiplierTB_func_synth.v}
@@ -18,11 +18,13 @@ module Booths_Multiplier
     multiplier,
     clk,
     rst,
+    count,
     product);
   input [7:0]multi;
   input [7:0]multiplier;
   input clk;
   input rst;
+  output [2:0]count;
   output [15:0]product;
 
   wire CE;
@@ -45,13 +47,14 @@ module Booths_Multiplier
   wire \count[0]_i_1_n_0 ;
   wire \count[1]_i_1_n_0 ;
   wire \count[2]_i_1_n_0 ;
+  wire [2:0]count_OBUF;
   wire ff10_i_1_n_0;
   wire ff11_i_1_n_0;
   wire ff12_i_1_n_0;
   wire ff13_i_1_n_0;
   wire ff14_i_1_n_0;
   wire ff15_i_1_n_0;
-  wire ff1_i_1_n_0;
+  wire ff16_i_1_n_0;
   wire ff2_i_1_n_0;
   wire ff3_i_1_n_0;
   wire ff4_i_1_n_0;
@@ -86,23 +89,18 @@ module Booths_Multiplier
   wire q_9;
   wire rst;
   wire rst_IBUF;
-  wire shift_mode;
+  wire \shift_mode[0]_i_1_n_0 ;
+  wire \shift_mode_reg_n_0_[0] ;
+  wire [7:0]shifted_data;
   wire \shifted_data[7]_i_1_n_0 ;
-  wire \shifted_data_reg_n_0_[0] ;
-  wire \shifted_data_reg_n_0_[1] ;
-  wire \shifted_data_reg_n_0_[2] ;
-  wire \shifted_data_reg_n_0_[3] ;
-  wire \shifted_data_reg_n_0_[4] ;
-  wire \shifted_data_reg_n_0_[5] ;
-  wire \shifted_data_reg_n_0_[6] ;
   wire [7:0]sum;
 
   LUT3 #(
     .INIT(8'h80)) 
     CE_i_1
-       (.I0(count[1]),
-        .I1(count[2]),
-        .I2(count[0]),
+       (.I0(count_OBUF[1]),
+        .I1(count_OBUF[2]),
+        .I2(count_OBUF[0]),
         .O(CE_i_1_n_0));
   FDRE #(
     .INIT(1'b1)) 
@@ -122,35 +120,44 @@ module Booths_Multiplier
   LUT4 #(
     .INIT(16'h3B33)) 
     \count[0]_i_1 
-       (.I0(count[1]),
-        .I1(count[0]),
+       (.I0(count_OBUF[1]),
+        .I1(count_OBUF[0]),
         .I2(rst_IBUF),
-        .I3(count[2]),
+        .I3(count_OBUF[2]),
         .O(\count[0]_i_1_n_0 ));
   (* SOFT_HLUTNM = "soft_lutpair4" *) 
   LUT4 #(
     .INIT(16'h6E66)) 
     \count[1]_i_1 
-       (.I0(count[1]),
-        .I1(count[0]),
+       (.I0(count_OBUF[1]),
+        .I1(count_OBUF[0]),
         .I2(rst_IBUF),
-        .I3(count[2]),
+        .I3(count_OBUF[2]),
         .O(\count[1]_i_1_n_0 ));
   LUT4 #(
     .INIT(16'h7F88)) 
     \count[2]_i_1 
-       (.I0(count[1]),
-        .I1(count[0]),
+       (.I0(count_OBUF[1]),
+        .I1(count_OBUF[0]),
         .I2(rst_IBUF),
-        .I3(count[2]),
+        .I3(count_OBUF[2]),
         .O(\count[2]_i_1_n_0 ));
+  OBUF \count_OBUF[0]_inst 
+       (.I(count_OBUF[0]),
+        .O(count[0]));
+  OBUF \count_OBUF[1]_inst 
+       (.I(count_OBUF[1]),
+        .O(count[1]));
+  OBUF \count_OBUF[2]_inst 
+       (.I(count_OBUF[2]),
+        .O(count[2]));
   FDRE #(
     .INIT(1'b0)) 
     \count_reg[0] 
        (.C(clk_IBUF_BUFG),
         .CE(1'b1),
         .D(\count[0]_i_1_n_0 ),
-        .Q(count[0]),
+        .Q(count_OBUF[0]),
         .R(1'b0));
   FDRE #(
     .INIT(1'b0)) 
@@ -158,7 +165,7 @@ module Booths_Multiplier
        (.C(clk_IBUF_BUFG),
         .CE(1'b1),
         .D(\count[1]_i_1_n_0 ),
-        .Q(count[1]),
+        .Q(count_OBUF[1]),
         .R(1'b0));
   FDRE #(
     .INIT(1'b0)) 
@@ -166,7 +173,7 @@ module Booths_Multiplier
        (.C(clk_IBUF_BUFG),
         .CE(1'b1),
         .D(\count[2]_i_1_n_0 ),
-        .Q(count[2]),
+        .Q(count_OBUF[2]),
         .R(1'b0));
   (* BOX_TYPE = "PRIMITIVE" *) 
   FDRE #(
@@ -189,7 +196,7 @@ module Booths_Multiplier
     ff1
        (.C(clk_IBUF_BUFG),
         .CE(CE),
-        .D(ff1_i_1_n_0),
+        .D(D0),
         .Q(q_1),
         .R(rst_IBUF));
   (* BOX_TYPE = "PRIMITIVE" *) 
@@ -208,9 +215,9 @@ module Booths_Multiplier
   LUT3 #(
     .INIT(8'hAC)) 
     ff10_i_1
-       (.I0(\shifted_data_reg_n_0_[1] ),
+       (.I0(shifted_data[1]),
         .I1(q_11),
-        .I2(shift_mode),
+        .I2(\shift_mode_reg_n_0_[0] ),
         .O(ff10_i_1_n_0));
   (* BOX_TYPE = "PRIMITIVE" *) 
   FDRE #(
@@ -228,9 +235,9 @@ module Booths_Multiplier
   LUT3 #(
     .INIT(8'hAC)) 
     ff11_i_1
-       (.I0(\shifted_data_reg_n_0_[2] ),
+       (.I0(shifted_data[2]),
         .I1(q_12),
-        .I2(shift_mode),
+        .I2(\shift_mode_reg_n_0_[0] ),
         .O(ff11_i_1_n_0));
   (* BOX_TYPE = "PRIMITIVE" *) 
   FDRE #(
@@ -248,9 +255,9 @@ module Booths_Multiplier
   LUT3 #(
     .INIT(8'hAC)) 
     ff12_i_1
-       (.I0(\shifted_data_reg_n_0_[3] ),
+       (.I0(shifted_data[3]),
         .I1(q_13),
-        .I2(shift_mode),
+        .I2(\shift_mode_reg_n_0_[0] ),
         .O(ff12_i_1_n_0));
   (* BOX_TYPE = "PRIMITIVE" *) 
   FDRE #(
@@ -268,9 +275,9 @@ module Booths_Multiplier
   LUT3 #(
     .INIT(8'hAC)) 
     ff13_i_1
-       (.I0(\shifted_data_reg_n_0_[4] ),
+       (.I0(shifted_data[4]),
         .I1(q_14),
-        .I2(shift_mode),
+        .I2(\shift_mode_reg_n_0_[0] ),
         .O(ff13_i_1_n_0));
   (* BOX_TYPE = "PRIMITIVE" *) 
   FDRE #(
@@ -288,9 +295,9 @@ module Booths_Multiplier
   LUT3 #(
     .INIT(8'hAC)) 
     ff14_i_1
-       (.I0(\shifted_data_reg_n_0_[5] ),
+       (.I0(shifted_data[5]),
         .I1(q_15),
-        .I2(shift_mode),
+        .I2(\shift_mode_reg_n_0_[0] ),
         .O(ff14_i_1_n_0));
   (* BOX_TYPE = "PRIMITIVE" *) 
   FDRE #(
@@ -308,9 +315,9 @@ module Booths_Multiplier
   LUT3 #(
     .INIT(8'hAC)) 
     ff15_i_1
-       (.I0(\shifted_data_reg_n_0_[6] ),
+       (.I0(shifted_data[6]),
         .I1(q_16),
-        .I2(shift_mode),
+        .I2(\shift_mode_reg_n_0_[0] ),
         .O(ff15_i_1_n_0));
   (* BOX_TYPE = "PRIMITIVE" *) 
   FDRE #(
@@ -321,25 +328,25 @@ module Booths_Multiplier
     ff16
        (.C(clk_IBUF_BUFG),
         .CE(CE),
-        .D(D0),
+        .D(ff16_i_1_n_0),
         .Q(q_16),
         .R(rst_IBUF));
   (* SOFT_HLUTNM = "soft_lutpair7" *) 
   LUT3 #(
     .INIT(8'hAC)) 
     ff16_i_1
-       (.I0(p_0_in),
+       (.I0(shifted_data[7]),
         .I1(q_16),
-        .I2(shift_mode),
-        .O(D0));
+        .I2(\shift_mode_reg_n_0_[0] ),
+        .O(ff16_i_1_n_0));
   (* SOFT_HLUTNM = "soft_lutpair8" *) 
   LUT3 #(
     .INIT(8'hAC)) 
     ff1_i_1
        (.I0(multiplier_IBUF[0]),
         .I1(q_2),
-        .I2(shift_mode),
-        .O(ff1_i_1_n_0));
+        .I2(p_0_in),
+        .O(D0));
   (* BOX_TYPE = "PRIMITIVE" *) 
   FDRE #(
     .INIT(1'b0),
@@ -358,7 +365,7 @@ module Booths_Multiplier
     ff2_i_1
        (.I0(multiplier_IBUF[1]),
         .I1(q_3),
-        .I2(shift_mode),
+        .I2(p_0_in),
         .O(ff2_i_1_n_0));
   (* BOX_TYPE = "PRIMITIVE" *) 
   FDRE #(
@@ -378,7 +385,7 @@ module Booths_Multiplier
     ff3_i_1
        (.I0(multiplier_IBUF[2]),
         .I1(q_4),
-        .I2(shift_mode),
+        .I2(p_0_in),
         .O(ff3_i_1_n_0));
   (* BOX_TYPE = "PRIMITIVE" *) 
   FDRE #(
@@ -398,7 +405,7 @@ module Booths_Multiplier
     ff4_i_1
        (.I0(multiplier_IBUF[3]),
         .I1(q_5),
-        .I2(shift_mode),
+        .I2(p_0_in),
         .O(ff4_i_1_n_0));
   (* BOX_TYPE = "PRIMITIVE" *) 
   FDRE #(
@@ -418,7 +425,7 @@ module Booths_Multiplier
     ff5_i_1
        (.I0(multiplier_IBUF[4]),
         .I1(q_6),
-        .I2(shift_mode),
+        .I2(p_0_in),
         .O(ff5_i_1_n_0));
   (* BOX_TYPE = "PRIMITIVE" *) 
   FDRE #(
@@ -438,7 +445,7 @@ module Booths_Multiplier
     ff6_i_1
        (.I0(multiplier_IBUF[5]),
         .I1(q_7),
-        .I2(shift_mode),
+        .I2(p_0_in),
         .O(ff6_i_1_n_0));
   (* BOX_TYPE = "PRIMITIVE" *) 
   FDRE #(
@@ -458,7 +465,7 @@ module Booths_Multiplier
     ff7_i_1
        (.I0(multiplier_IBUF[6]),
         .I1(q_8),
-        .I2(shift_mode),
+        .I2(p_0_in),
         .O(ff7_i_1_n_0));
   (* BOX_TYPE = "PRIMITIVE" *) 
   FDRE #(
@@ -478,7 +485,7 @@ module Booths_Multiplier
     ff8_i_1
        (.I0(multiplier_IBUF[7]),
         .I1(q_9),
-        .I2(shift_mode),
+        .I2(p_0_in),
         .O(ff8_i_1_n_0));
   (* BOX_TYPE = "PRIMITIVE" *) 
   FDRE #(
@@ -496,9 +503,9 @@ module Booths_Multiplier
   LUT3 #(
     .INIT(8'hAC)) 
     ff9_i_1
-       (.I0(\shifted_data_reg_n_0_[0] ),
+       (.I0(shifted_data[0]),
         .I1(q_10),
-        .I2(shift_mode),
+        .I2(\shift_mode_reg_n_0_[0] ),
         .O(ff9_i_1_n_0));
   IBUF \multi_IBUF[0]_inst 
        (.I(multi[0]),
@@ -727,13 +734,28 @@ module Booths_Multiplier
   IBUF rst_IBUF_inst
        (.I(rst),
         .O(rst_IBUF));
+  LUT3 #(
+    .INIT(8'hBE)) 
+    \shift_mode[0]_i_1 
+       (.I0(rst_IBUF),
+        .I1(q_1),
+        .I2(q_0),
+        .O(\shift_mode[0]_i_1_n_0 ));
   FDRE #(
     .INIT(1'b1)) 
-    shift_mode_reg
+    \shift_mode_reg[0] 
+       (.C(clk_IBUF_BUFG),
+        .CE(1'b1),
+        .D(\shift_mode[0]_i_1_n_0 ),
+        .Q(\shift_mode_reg_n_0_[0] ),
+        .R(1'b0));
+  FDRE #(
+    .INIT(1'b1)) 
+    \shift_mode_reg[1] 
        (.C(clk_IBUF_BUFG),
         .CE(1'b1),
         .D(1'b0),
-        .Q(shift_mode),
+        .Q(p_0_in),
         .R(1'b0));
   (* SOFT_HLUTNM = "soft_lutpair6" *) 
   LUT4 #(
@@ -914,7 +936,7 @@ module Booths_Multiplier
        (.C(clk_IBUF_BUFG),
         .CE(\shifted_data[7]_i_1_n_0 ),
         .D(sum[0]),
-        .Q(\shifted_data_reg_n_0_[0] ),
+        .Q(shifted_data[0]),
         .R(1'b0));
   FDRE #(
     .INIT(1'b0)) 
@@ -922,7 +944,7 @@ module Booths_Multiplier
        (.C(clk_IBUF_BUFG),
         .CE(\shifted_data[7]_i_1_n_0 ),
         .D(sum[1]),
-        .Q(\shifted_data_reg_n_0_[1] ),
+        .Q(shifted_data[1]),
         .R(1'b0));
   FDRE #(
     .INIT(1'b0)) 
@@ -930,7 +952,7 @@ module Booths_Multiplier
        (.C(clk_IBUF_BUFG),
         .CE(\shifted_data[7]_i_1_n_0 ),
         .D(sum[2]),
-        .Q(\shifted_data_reg_n_0_[2] ),
+        .Q(shifted_data[2]),
         .R(1'b0));
   FDRE #(
     .INIT(1'b0)) 
@@ -938,7 +960,7 @@ module Booths_Multiplier
        (.C(clk_IBUF_BUFG),
         .CE(\shifted_data[7]_i_1_n_0 ),
         .D(sum[3]),
-        .Q(\shifted_data_reg_n_0_[3] ),
+        .Q(shifted_data[3]),
         .R(1'b0));
   FDRE #(
     .INIT(1'b0)) 
@@ -946,7 +968,7 @@ module Booths_Multiplier
        (.C(clk_IBUF_BUFG),
         .CE(\shifted_data[7]_i_1_n_0 ),
         .D(sum[4]),
-        .Q(\shifted_data_reg_n_0_[4] ),
+        .Q(shifted_data[4]),
         .R(1'b0));
   FDRE #(
     .INIT(1'b0)) 
@@ -954,7 +976,7 @@ module Booths_Multiplier
        (.C(clk_IBUF_BUFG),
         .CE(\shifted_data[7]_i_1_n_0 ),
         .D(sum[5]),
-        .Q(\shifted_data_reg_n_0_[5] ),
+        .Q(shifted_data[5]),
         .R(1'b0));
   FDRE #(
     .INIT(1'b0)) 
@@ -962,7 +984,7 @@ module Booths_Multiplier
        (.C(clk_IBUF_BUFG),
         .CE(\shifted_data[7]_i_1_n_0 ),
         .D(sum[6]),
-        .Q(\shifted_data_reg_n_0_[6] ),
+        .Q(shifted_data[6]),
         .R(1'b0));
   FDRE #(
     .INIT(1'b0)) 
@@ -970,7 +992,7 @@ module Booths_Multiplier
        (.C(clk_IBUF_BUFG),
         .CE(\shifted_data[7]_i_1_n_0 ),
         .D(sum[7]),
-        .Q(p_0_in),
+        .Q(shifted_data[7]),
         .R(1'b0));
 endmodule
 `ifndef GLBL
