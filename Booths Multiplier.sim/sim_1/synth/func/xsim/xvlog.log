@@ -1,0 +1,5 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Mtech/Vivado/Booths Multiplier/Booths Multiplier.sim/sim_1/synth/func/xsim/Booths_MultiplierTB_func_synth.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Booths_Multiplier
+INFO: [VRFC 10-311] analyzing module glbl
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Mtech/Vivado/Booths Multiplier/Booths Multiplier.srcs/sim_1/new/Booths_MultiplierTB.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Booths_MultiplierTB
