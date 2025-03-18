@@ -1,0 +1,4 @@
+Running: xsim.dir/Booths_MultiplierTB_func_synth/xsimk.exe -simmode gui -wdb Booths_MultiplierTB_func_synth.wdb -simrunnum 0 -socket 53975
+Design successfully loaded
+Design Loading Memory Usage: 7336 KB (Peak: 7336 KB)
+Design Loading CPU Usage: 0 ms
